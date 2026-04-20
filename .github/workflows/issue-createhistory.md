@@ -14,6 +14,13 @@ tools:
 engine: copilot
 
 network: defaults
+
+safe-outputs: 
+  create-issue:
+    max: 1
+  update-issue:
+    max: 1
+  add-comment: {}
 ---
 
 # issue-createhistory
