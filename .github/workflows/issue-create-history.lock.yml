@@ -45,9 +45,9 @@
 
 name: "issue-create-history"
 "on":
-  issue_comment:
+  issues:
     types:
-    - created
+    - opened
 
 permissions: {}
 
