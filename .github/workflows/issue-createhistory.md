@@ -20,7 +20,7 @@ safe-outputs:
   update-project:
     project: https://github.com/users/<HU_OWNER>/projects/<HU_PROJECT_NUMBER>
     max: 1
-    github-token: ${{ secrets.GH_AW_PROJECT_GITHUB_TOKEN }}
+    github-token: ${{ secrets.GH_AW_PROJECT_GITHUB_TOKEN || secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
   update-issue:
     max: 1
   add-comment: {}
