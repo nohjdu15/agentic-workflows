@@ -1290,6 +1290,17 @@ jobs:
             setupGlobals(core, github, context, exec, io, getOctokit);
             const { main } = require('${{ runner.temp }}/gh-aw/actions/safe_output_handler_manager.cjs');
             await main();
+      - name: Print created HU URL
+        if: always()
+        shell: bash
+        run: |
+          if [ -n "${{ steps.process_safe_outputs.outputs.created_issue_url }}" ]; then
+            echo "::notice::HU creada: ${{ steps.process_safe_outputs.outputs.created_issue_url }}"
+            echo "HU creada: ${{ steps.process_safe_outputs.outputs.created_issue_url }}" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::No se creó HU en este run (created_issue_url vacío)."
+            echo "No se creó HU en este run (created_issue_url vacío)." >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Upload Safe Outputs Items
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
