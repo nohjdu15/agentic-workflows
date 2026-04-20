@@ -10,6 +10,7 @@ permissions:
 
 tools:
   github:
+    toolsets: [default, projects]
 
 engine: copilot
 
@@ -17,7 +18,7 @@ network: defaults
 
 safe-outputs: 
   update-project:
-    project: https://github.com/users/TU_USUARIO/projects/1
+    project: https://github.com/users/<HU_OWNER>/projects/<HU_PROJECT_NUMBER>
     max: 1
     github-token: ${{ secrets.GH_AW_PROJECT_GITHUB_TOKEN }}
   update-issue:
@@ -32,8 +33,11 @@ when a new issue is opened or reopened, you will transform it into a structured 
 ## what to do
 
 1. read the issue title and description
-2. analyze the content and determine the intent (bug, feature request, or improvement)
-3. generate a structured user story in both spanish and english using the exact format below:
+2. consume the GitHub API using github tools (projects toolset) and detect the GitHub Project associated with the triggering issue
+3. if one or more projects are linked, pick the first project URL and use that exact URL in update_project
+4. if no project is linked to the triggering issue, do not guess a project URL
+5. analyze the content and determine the intent (bug, feature request, or improvement)
+6. generate a structured user story in both spanish and english using the exact format below:
 
 -------------
 Story (Spanish)
@@ -56,20 +60,20 @@ GIVEN...
 WHEN...
 THEN...
 
-4. ensure the output is clear, specific, actionable, and technically precise
-5. if the issue lacks information, make reasonable assumptions aligned with devsecops and ci/cd practices
-6. generate acceptance criteria using testable and measurable conditions:
+7. ensure the output is clear, specific, actionable, and technically precise
+8. if the issue lacks information, make reasonable assumptions aligned with devsecops and ci/cd practices
+9. generate acceptance criteria using testable and measurable conditions:
    - use technical outputs such as exit codes, logs (::error::), file paths, or pipeline/job status
    - avoid vague phrases like "should work correctly"
-7. prioritize acceptance criteria that can be validated in ci/cd pipelines
-8. do not include explanations or additional text outside the defined structure
+10. prioritize acceptance criteria that can be validated in ci/cd pipelines
+11. do not include explanations or additional text outside the defined structure
 
 ## output behavior
 
 - do not create a new issue
 - update the triggering issue with the generated user story in the issue body
-- add the triggering issue to this GitHub Project (replace with your real URL):
-  https://github.com/orgs/TU_ORG/projects/1
+- use the project URL discovered from the triggering issue through GitHub API
+- if no project is discovered, skip update_project and post a comment indicating "Issue sin proyecto asociado"
 - set project fields when possible (for example: Status = Backlog, Priority = Medium)
 - add a comment in the triggering issue with confirmation and the project URL
 
