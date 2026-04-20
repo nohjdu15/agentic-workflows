@@ -17,6 +17,17 @@ engine: copilot
 network: defaults
 
 safe-outputs: 
+  steps:
+    - name: Print HU URL notice
+      shell: bash
+      env:
+        HU_SERVER_URL: ${{ github.server_url }}
+        HU_REPOSITORY: ${{ github.repository }}
+        HU_ISSUE_NUMBER: ${{ github.event.issue.number }}
+      run: |
+        HU_URL="${HU_SERVER_URL}/${HU_REPOSITORY}/issues/${HU_ISSUE_NUMBER}"
+        echo "::notice::HU generada/actualizada: ${HU_URL}"
+        echo "HU generada/actualizada: ${HU_URL}" >> "$GITHUB_STEP_SUMMARY"
   update-project:
     project: https://github.com/users/<HU_OWNER>/projects/<HU_PROJECT_NUMBER>
     max: 1
