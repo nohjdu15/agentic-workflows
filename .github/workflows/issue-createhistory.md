@@ -16,8 +16,10 @@ engine: copilot
 network: defaults
 
 safe-outputs: 
-  create-issue:
+  update-project:
+    project: https://github.com/users/TU_USUARIO/projects/1
     max: 1
+    github-token: ${{ secrets.GH_AW_PROJECT_GITHUB_TOKEN }}
   update-issue:
     max: 1
   add-comment: {}
@@ -25,7 +27,7 @@ safe-outputs:
 
 # issue-createhistory
 
-when a new issue is opened or reopened, you will transform it into a structured bilingual user story using AI and create a new issue with the result
+when a new issue is opened or reopened, you will transform it into a structured bilingual user story using AI, update the original issue, and add it to a GitHub Project dashboard
 
 ## what to do
 
@@ -64,9 +66,12 @@ THEN...
 
 ## output behavior
 
-- create a new github issue with the generated user story
-- the new issue title must start with: "HU - "
-- include a reference to the original issue number in the body
+- do not create a new issue
+- update the triggering issue with the generated user story in the issue body
+- add the triggering issue to this GitHub Project (replace with your real URL):
+  https://github.com/orgs/TU_ORG/projects/1
+- set project fields when possible (for example: Status = Backlog, Priority = Medium)
+- add a comment in the triggering issue with confirmation and the project URL
 
 ## constraints
 
