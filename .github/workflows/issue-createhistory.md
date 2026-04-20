@@ -2,9 +2,17 @@
 on:
   issues:
     types: [opened, reopened]
+
 permissions:
-      contents: read
+  contents: read
+  issues: read
+  pull-requests: read
+
+tools:
+  github:
+
 engine: copilot
+
 network: defaults
 ---
 
